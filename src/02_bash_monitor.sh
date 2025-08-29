@@ -3,17 +3,21 @@
 
 while true; do 
     if read -t 0; then # Input ready
-        read -r -n 1 char
-        echo -e "\nRead: ${char}\n"
-        break
+            read -r -n 1 char
+            echo -e "\nRead: ${char}\n"
+            break
+        else
+            # echo -n '.'
+            c=$(grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print usage "%"}'); 
+            echo "CPU ${c:0:4} %";
+            sleep 2
         fi
     clear;
     # sensors|grep 'fan1\|CPU' ; c=$(grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print usage "%"}');
 
-    c=$(grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print usage "%"}'); 
-    echo "CPU ${c:0:4} %";
     
-    sleep 3;
+    
+    # sleep 3;
 done
 
 # chmod +x bash_monitor.sh

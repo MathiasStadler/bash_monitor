@@ -1,1 +1,3 @@
+# shellcheck disable=all # code is irrelevant because reasons
 while true; do clear; sensors|grep 'fan1\|CPU' ; c=$(grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print usage "%"}'); echo "CPU ${c:0:5}%";a=$((jq -n $(free -m | awk '/Speicher/{print $3}')/$(free -m | awk '/Speicher/{print $2}')*100) );echo "Mem ${a:0:5}%";echo -n  "AVG "; echo  "$(cut -d" " -f1 /proc/loadavg )*100"|bc;sleep 3; done
+# shellcheck enable=all
